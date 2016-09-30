@@ -18,27 +18,27 @@ namespace AbstractionConsoleApplication
 
     public class BaseClass<T> where T : class
     {
-        public IBase<T> classObject;
+        public T classObject;
 
         public BaseClass()
         {
-            classObject = Factory.CreateInstance<T>() as IBase<T>;
+            classObject = Factory.CreateInstance<T>();
         }
     }
 
-    public class Person : BaseClass<IRead>
+    public class Person : BaseClass<IWrite>
     {
         public void Run()
         {
             if (classObject != null)
             {
-                classObject.GetInstance().GetAll();
+                classObject.GetWrite();
             }
         }
     }
 
 
-    public interface IRead : IBase<ReadClass>
+    public interface IRead : IBase
     {
         string GetAll();
     }
@@ -49,14 +49,9 @@ namespace AbstractionConsoleApplication
         {
             return "GetRead";
         }
-
-        public ReadClass GetInstance()
-        {
-            return new ReadClass();
-        }
     }
 
-    public interface IWrite : IBase<WriteClass>
+    public interface IWrite : IBase
     {
         string GetWrite();
     }
@@ -67,16 +62,11 @@ namespace AbstractionConsoleApplication
         {
             return "GetWrite";
         }
-
-        public WriteClass GetInstance()
-        {
-            return new WriteClass();
-        }
     }
 
-    public interface IBase<T>
+    public interface IBase
     {
-        T GetInstance();
+
     }
 }
 
